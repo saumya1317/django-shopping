@@ -1,0 +1,153 @@
+{% extends 'app/base.html' %}
+
+{% block title %}{{ product.title }}{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Product Image Section -->
+        <div class="col-md-6">
+            <img 
+                src="{{ product.product_image.url }}" 
+                alt="{{ product.title }}" 
+                class="product-image img-fluid rounded shadow-sm" 
+                style="cursor: pointer;" 
+                data-bs-toggle="modal" 
+                data-bs-target="#imageModal"
+            >
+        </div>
+
+        <!-- Product Info Section -->
+        <div class="col-md-6">
+            <!-- Product Title -->
+            <h1 class="product-title text-black fw-bold">{{ product.title }}</h1>
+
+            <!-- Price and Discount -->
+            <p class="product-price text-muted fs-5" style="text-decoration: line-through;">₹{{ product.selling_price }}/-</p>
+            {% if product.discounted_price %}
+                <p class="product-discounted-price text-success fw-bold fs-4" style="animation: popIn 1s ease-out;">
+                    ₹{{ product.discounted_price }}
+                </p>
+            {% endif %}
+
+            <!-- Product Description -->
+            <p class="product-description text-secondary fs-6 mt-3">{{ product.description }}</p>
+
+            <!-- Additional Information -->
+            <p class="product-prodapp text-dark fw-light fst-italic">{{ product.prodapp }}</p>
+
+            <!-- Action Buttons -->
+           <div class="mt-4">
+    <form action="/add-to-cart"  class="d-inline">
+        <input type="hidden" name="prod_id" value={{product.id}} />
+        <button type="submit" class="btn btn-danger btn-lg p-1 m-1 text-white">Add to Cart</button>
+    </form>
+    <form action="{% url 'buy-now' %}" class="d-inline">
+        <input type="hidden" name="prod_id" value="{{ product.id }}" />
+        <button type="submit" class="btn btn-outline-success btn-lg">Buy Now</button>
+    </form>
+</div>
+
+<!-- Price Alert Form -->
+<div class="mt-3">
+    {% if existing_alert %}
+        <div class="alert alert-info d-flex justify-content-between align-items-center">
+            <span>
+                Alert set at ₹{{ existing_alert.target_price }} {% if existing_alert.buy_when_drop %}(auto-buy enabled){% endif %}
+            </span>
+            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#priceAlertForm" role="button">Change</a>
+        </div>
+    {% endif %}
+
+    <div id="priceAlertForm" class="collapse {% if not existing_alert %}show{% endif %}">
+        <form method="post" action="{% url 'set_price_alert' product.pk %}" class="row g-2 align-items-center">
+            {% csrf_token %}
+            <div class="col-auto">
+                <input type="number" name="target_price" value="{% if existing_alert %}{{ existing_alert.target_price }}{% endif %}" step="0.01" min="1" required class="form-control" placeholder="Buy / Notify at price ₹">
+            </div>
+            <div class="col-auto form-check">
+                <input class="form-check-input" type="checkbox" value="1" id="buyWhenDrop{{ product.id }}" name="buy_when_drop" {% if existing_alert and existing_alert.buy_when_drop %}checked{% endif %}>
+                <label class="form-check-label" for="buyWhenDrop{{ product.id }}">
+                    Buy automatically
+                </label>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">{% if existing_alert %}Update{% else %}Set Alert{% endif %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Image Zoom -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img 
+                    src="{{ product.product_image.url }}" 
+                    alt="{{ product.title }}" 
+                    class="img-fluid rounded"
+                >
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS for Styling -->
+<style>
+    @keyframes popIn {
+        0% {
+            transform: scale(0.9);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .product-title {
+        font-family: 'Georgia', serif;
+        font-size: calc(1.2rem + 1.5vw); /* Dynamically smaller font size */
+        color: black;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-size: 1.2rem;
+    }
+
+    .product-discounted-price {
+        animation: popIn 0.6s ease-in-out;
+    }
+
+    .product-image {
+        transition: transform 0.3s ease;
+    }
+
+    .product-image:hover {
+        transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+        .product-title {
+            font-size: 1.5rem; /* Smaller for mobile screens */
+        }
+    }
+</style>
+{% endblock main-content %}
+
+
+
+
+
+
+

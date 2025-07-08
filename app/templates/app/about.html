@@ -1,0 +1,73 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock title %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Logo Section -->
+        <div class="col-lg-8 mx-auto text-center mb-4">
+            <img src="{% static 'app/images/Screenshot_2025-01-03_142144-removebg-preview.png' %}" alt="Sabhichick Logo" class="img-fluid rounded" style="max-height: 150px;">
+        </div>
+
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h1 class="text-center mb-4">About Us</h1>
+                    <p class="text-muted">
+                        Welcome to <strong>Sabhichick</strong>, your one-stop destination for all things stylish, trendy, and affordable! At Sabhichick, we believe that everyone deserves to feel confident and fashionable without breaking the bank.
+                    </p>
+                    <h3 class="mt-4">Our Mission</h3>
+                    <p>
+                        Our mission is to provide a seamless shopping experience with a curated collection of high-quality products that cater to your unique style and needs. Whether you're looking for chic dresses, comfortable denims, or everyday essentials, we’ve got you covered!
+                    </p>
+                    <h3 class="mt-4">Why Choose Us?</h3>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item">🌟 <strong>Quality You Can Trust</strong>: Each product is handpicked and crafted with care to ensure the best quality for our customers.</li>
+                        <li class="list-group-item">💰 <strong>Affordable Prices</strong>: We believe in making fashion accessible, offering competitive prices without compromising on quality.</li>
+                        <li class="list-group-item">💼 <strong>Customer-Centric Service</strong>: Your satisfaction is our top priority. From easy returns to round-the-clock support, we're here for you at every step.</li>
+                        <li class="list-group-item">👗 <strong>Diverse Categories</strong>: Explore a wide range of categories, from trendy party wear to timeless ethnic dresses and beauty essentials.</li>
+                    </ul>
+                    <h3 class="mt-4">Our Vision</h3>
+                    <p>
+                        We aspire to be more than just a store — we aim to be a part of your lifestyle. With a finger on the pulse of the latest trends, we’re constantly evolving to meet your fashion needs while promoting sustainability and inclusivity.
+                    </p>
+                    <div class="text-center mt-4">
+                        <h4 class="text-success">Thank You for Choosing Us!</h4>
+                        <p>We’re thrilled to have you as a part of our growing family. Happy shopping at <strong>Sabhichick</strong>, where style meets simplicity!</p>
+                        <a href="{% url 'home' %}" class="btn btn-primary">Start Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+    }
+
+    h1, h3 {
+        color: #2c3e50;
+        font-weight: bold;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .list-group-item {
+        font-size: 15px;
+        line-height: 1.6;
+        border: none;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+{% endblock main-content %}

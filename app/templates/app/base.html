@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A sample products page designed by Saumya Rai.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+
+    <title>PRODUCTS | {% block title %}{% endblock title %}</title>
+    <style>
+        .navbar {
+            background-color: #FFD1DC !important; /* Pastel pink */
+            border: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+        }
+        .navbar-nav {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .navbar-nav li {
+            display: inline-block;
+        }
+
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: #000 !important; /* Black text */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #FF69B4 !important; /* Slightly darker pink for hover effect */
+        }
+
+        .navbar-toggler {
+            background-color: #FFD1DC !important; /* Match the navbar color */
+            border-color: #FF69B4 !important; /* Slightly darker pink for toggler border */
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='black' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'app/images/Screenshot_2025-01-03_142144-removebg-preview.png' %}" width="130" height="160" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        
+            
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Products
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'category' 'D' %}">Dress</a></li>
+                <li><a class="dropdown-item" href="{% url 'category' 'E' %}">Ethnic wear</a></li>
+                <li><a class="dropdown-item" href="{% url 'category' 'J' %}">Jeans</a></li>
+                <li><a class="dropdown-item" href="{% url 'category' 'P' %}">Party dress</a></li>
+                <li><a class="dropdown-item" href="{% url 'category' 'B' %}">Beauty</a></li>
+                <div class="dropdown-divider"></div>
+                
+              </div>
+            </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'about' %}">About US</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'contact'  %}">Contact-US</a>
+              </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+          <ul class="navbar-nav ml-auto">
+            <!-- Right side links -->
+            <ul class="navbar navbar-expand-lg navbar-dark bg-success" style="list-style-type: none; padding-left: 0;">
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Saumya
+                  </a> <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="list-style-type: none; padding-left: 0;">
+                    <li>
+                        <a class="dropdown-item btn btn-light" href="{% url 'profile' %}" style="font-weight: bold; width: 100%; text-align: center;">Profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item btn btn-light" href="#" style="font-weight: bold; width: 100%; text-align: center;">Orders</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item btn btn-light" href="{% url 'passwordchange' %}" style="font-weight: bold; width: 100%; text-align: center;">Change password</a>
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <a class="dropdown-item btn btn-light" href="{% url 'logout' %}" style="font-weight: bold; width: 100%; text-align: center;">Logout</a>
+                    {% endif %}
+                    
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'showcart' %}">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Wishlist</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'CustomerRegistration' %}">Registration</a>
+            </li>
+        </ul>
+            </li>
+            {% endif %}
+        </ul>
+        
+        <!-- Bootstrap hover effect -->
+        <style>
+            .dropdown-item {
+                margin-bottom: 5px; /* Add space between buttons */
+            }
+            .btn-light {
+                background-color: white;
+                color: black;
+                padding: 10px 20px;
+                border-radius: 5px;
+                border: 1px solid transparent;
+                width: 100%;
+                text-align: center;
+            }
+            .btn-light:hover {
+                background-color: #FF69B4 !important; /* Light pink on hover */
+                color: white !important; /* White text on hover */
+                cursor: pointer;
+            }
+        </style>
+        
+        
+           
+
+           </ul>
+        </div>
+      </nav>  
+      {% block banner-slider %}{% endblock banner-slider %}
+      {% block main-content %}{% endblock main-content %}
+      {% block information %} {%  endblock %}
+
+      <footer class="fixed-bottom text-center p-2 mt-5">
+        <p>Copyright: 2025 | Developed by: Saumya Rai</p>
+      </footer>
+      <style>
+        /* Adjusting margin to create a gap between search and Saumya button */
+        .navbar-nav .nav-item {
+            margin-left: 20px; /* Adjust this value to your liking */
+        }
+        
+        /* Or, if you prefer adjusting the form (Search) */
+        .d-flex {
+            margin-right: 20px; /* Adjust this value for a suitable gap */
+        }
+    </style>
+<style>
+  /* Adjust Saumya dropdown position */
+  .navbar-nav .nav-item.dropdown {
+      margin-top: 1px;
+      /* Adjust this value to align with the Cart button */
+  }
+
+  .navbar-nav .nav-item {
+      margin-left: 15px;
+      font-style: inherit;  /* Ensure consistent left margin for all nav items */
+  }
+</style>
+<style>
+    /* Apply hover effect to navbar links on both sides */
+    .navbar-nav .nav-link:hover {
+        background-color: #FF1493 !important; /* Dark pink */
+        color: white !important; /* Text color white on hover */
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+    /* Optional: You can also add a border radius if you want rounded edges */
+    .navbar-nav .nav-link {
+        border-radius: 5px; /* Optional for rounded corners */
+    }
+
+    /* Make sure the links on the right side are aligned similarly */
+    .navbar-nav .nav-item {
+        margin-left: 10px; /* Optional: Add space between right-side items */
+    }
+</style>
+
+<style>
+  /* Apply hover effect to navbar links */
+  .navbar-nav .nav-link:hover {
+      background-color: #FF1493 !important; /* Dark pink */
+      color: white !important; /* Text color white on hover */
+      transition: background-color 0.3s ease; /* Smooth transition */
+  }
+
+  /* Optional: You can also add a border radius if you want rounded edges */
+  .navbar-nav .nav-link {
+      border-radius: 5px; /* Optional for rounded corners */
+  }
+</style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'app/js/all.min.js' %}"></script>
+    <script src="{% static 'app/js/myscript.js' %}"></script>
+    <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
+</body>
+</html>

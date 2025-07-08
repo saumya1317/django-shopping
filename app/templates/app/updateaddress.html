@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Update Address{% endblock title %}
+
+{% block main-content %}
+    <div class="container my-5">
+        <!-- Card for Update Address Form -->
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Update Address</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="post">
+                            {% csrf_token %}
+
+                            <!-- Loop through the form fields and display each field with appropriate spacing -->
+                            {% for fm in form %}
+                                <div class=" row mb-4 align-items-center">
+                                    {{ fm.label_tag }} 
+                                    {{ fm }}  <!-- Label and field -->
+                                    <small class="text-danger">{{ fm.errors|striptags }}</small>  <!-- Display field errors -->
+                                </div>
+                            {% endfor %}
+
+                            <!-- Submit button and back button -->
+                            <div class="form-group mb-3">
+                                <button type="submit" class="btn btn-primary">Update Address</button>
+                                <a href="{% url 'address' %}" class="btn btn-danger">Back</a>
+                            </div>
+
+                            <!-- Non-field errors -->
+                            {% if form.non_field_errors %}
+                                {% for error in form.non_field_errors %}
+                                    <div class="alert alert-danger my-3">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-header text-white" style="background-color: #c2185b;">
+        Update Address
+    </div>
+{% endblock %}

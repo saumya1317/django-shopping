@@ -1,0 +1,85 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Customer Registration{% endblock %}
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <!-- Welcome Section -->
+        <h3>Welcome <span class="text-capitalize">{{ request.user }}</span></h3>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Left Side Buttons -->
+        <div class="col-md-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{% url 'profile' %}" class="btn btn-primary btn-block w-100">Profile</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'address' %}" class="btn btn-secondary btn-block w-100">Address</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right Side Form -->
+        <div class="col-md-9">
+            <form method="post" id="customerForm" class="p-4 border rounded shadow-custom">
+                {% csrf_token %}
+                
+                {% for fm in form %}
+                    <div class="form-group row mb-3">
+                        <label for="{{ fm.id_for_label }}" class="col-sm-3 col-form-label">{{ fm.label }}</label>
+                        <div class="col-sm-9">
+                            {{ fm }} 
+                            <small class="text-danger">{{ fm.errors|striptags }}</small>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-success w-100">Save</button>
+                </div>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger mt-3">
+                        <ul>
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="alert alert-{{ msg.tags }} mt-3" role="alert">
+                            {{ msg }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add hover effect to the form using JavaScript
+    const form = document.getElementById('customerForm');
+
+    form.addEventListener('mouseenter', function() {
+        form.style.boxShadow = '0 10px 20px rgba(255, 105, 180, 0.8)'; // Larger shadow on hover
+    });
+
+    form.addEventListener('mouseleave', function() {
+        form.style.boxShadow = '0 4px 8px rgba(255, 182, 193, 0.5)'; // Smaller shadow when mouse leaves
+    });
+</script>
+
+{% endblock %}
+
+
+
+
+
