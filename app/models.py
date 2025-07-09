@@ -7,6 +7,7 @@ CATEGORY_CHOICES = (
     ('B', 'Beauty'),
     ('P', 'Party Dress'),
     ('E', 'Ethnic Dress'),
+    ('F', 'Food'),  # Added food category
 )
 STATE_CHOICES = (
     ('Andhra Pradesh', 'Andhra Pradesh'),

@@ -34,6 +34,7 @@ urlpatterns = [
     path('pluscart/',views.plus_cart),
     path('minuscart/',views.minus_cart),
     path('removecart/',views.remove_cart),
+    path('search/', views.search, name='search'),
    #path('password-reset/',auth_view.PasswordResetForm.as_view(template_name='app/password_reset.html',form_class=MyPasswordResetForm),name='password_reset'),
     path('passwordchange/',auth_view.PasswordChangeView.as_view(template_name='app/password_change.html',form_class=MyPasswordChangeForm,success_url ='/passwordchangedone'),name='passwordchange'),
     path('passwordchangedone/',auth_view.PasswordChangeDoneView.as_view(template_name='app/passwordchangedone.html'),name='passwordchangedone'),
@@ -54,6 +55,7 @@ path('password-reset-complete/',
      auth_view.PasswordResetCompleteView.as_view(template_name='app/password_reset_complete.html'), 
      name='password_reset_complete'),
 
+path('assistant/', views.assistant, name='assistant'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

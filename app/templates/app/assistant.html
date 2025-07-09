@@ -1,0 +1,20 @@
+{% extends 'app/base.html' %}
+{% block title %}Your Assistant{% endblock title %}
+{% block main-content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Ask Your Assistant</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control" name="query" placeholder="Ask anything... (e.g., 'milk tea under 100', 'purple farewell look under 1000')" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Ask</button>
+    </form>
+    {% if response %}
+    <div class="mt-4 p-3 bg-light border rounded">
+        <h5>Assistant's Response:</h5>
+        <div>{{ response|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+{% endblock main-content %} 

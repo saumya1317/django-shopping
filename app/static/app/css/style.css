@@ -1,3 +1,10 @@
+/* Walmart-style ecommerce theme */
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background-color: #f5f6fa;
+    color: #222;
+}
+
 .owl-carousel .item{
  /* border: 1px solid black; */
  font-size: 24px;
@@ -10,7 +17,6 @@
     /* border: 1px solid black; */
     transform : scale(1.1);
 }
-
 /* .owl-carousel img{
     transition: transform .5s ease;
   }
@@ -18,7 +24,6 @@
     
     transform : scale(1.25);
 } */
-
 .owl-next{
  float:right;
 }
@@ -33,8 +38,6 @@
  font-size: 24px;
  font-weight: bold;
 }
-
-
 
 .navbar {
     background-color: #FFD1DC; /* Pastel pink color */
@@ -76,14 +79,12 @@
     box-shadow: 0 4px 8px rgba(255, 192, 203, 0.6); /* Pink shadow */
     transition: box-shadow 0.3s ease;
 }
-
 .pink-shadow:hover {
     box-shadow: 0 8px 16px rgba(255, 105, 180, 0.8); /* Darker pink shadow on hover */
 }
 #navbarSupportedContent {
     list-style-type: none;
-  }
-
+}
 #navbarSupportedContent .nav-link.text-white {
   color: black !important;
   

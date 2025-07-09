@@ -10,40 +10,84 @@
     <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'app/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
-
     <title>PRODUCTS | {% block title %}{% endblock title %}</title>
     <style>
-        .navbar {
-            background-color: #FFD1DC !important; /* Pastel pink */
-            border: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+        .owl-carousel .item{
+         /* border: 1px solid black; */
+         font-size: 24px;
+         text-align: center;
+         margin-top: 20px;
+         transition: transform .5s ease;
         }
-        .navbar-nav {
-            list-style-type: none;
-            padding-left: 0;
+        .owl-carousel .item:hover{
+           /* border: 1px solid black; */
+           transform : scale(1.1);
+        }
+        /* .owl-carousel img{
+            transition: transform .5s ease;
+          }
+         .owl-carousel img:hover{
+            
+            transform : scale(1.25);
+        } */
+        .owl-next{
+         float:right;
+        }
+        .owl-prev{
+         float:left;
+        }
+        .owl-prev span{
+         font-size: 24px;
+         font-weight: bold;
+        }
+        .owl-next span{
+         font-size: 24px;
+         font-weight: bold;
+        }
+        .navbar {
+            background-color: #FFD1DC; /* Pastel pink color */
+            color: #000; /* Black text for contrast */
+            border: none; /* Remove any borders if present */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+        .navbar a {
+            color: #000; /* Black text for links */
+            text-decoration: none; /* Remove underline from links */
+        }
+        .navbar a:hover {
+            color: #FF69B4; /* Slightly darker pink for hover effect */
+        }
+        .navbar-nav, .navbar-nav li {
+            list-style: none;
+            padding: 0;
             margin: 0;
         }
-
-        .navbar-nav li {
-            display: inline-block;
+        /* Remove bullets, padding, and margin from the navbar items */
+        .navbar-nav {
+            list-style-type: none !important; /* Remove bullets */
+            padding-left: 0 !important; /* Remove padding */
+            margin-bottom: 0 !important; /* Remove bottom margin */
         }
-
-        .navbar-brand,
-        .navbar-nav .nav-link {
-            color: #000 !important; /* Black text */
+        .navbar-nav > li {
+            display: inline-block !important; /* Make items inline */
+            margin-right: 15px; /* Optional: space between items */
         }
-
-        .navbar-nav .nav-link:hover {
-            color: #FF69B4 !important; /* Slightly darker pink for hover effect */
+        .navbar-nav .nav-item {
+            padding: 0; /* Ensure no additional padding */
         }
-
-        .navbar-toggler {
-            background-color: #FFD1DC !important; /* Match the navbar color */
-            border-color: #FF69B4 !important; /* Slightly darker pink for toggler border */
+        .pink-shadow {
+            box-shadow: 0 4px 8px rgba(255, 192, 203, 0.6); /* Pink shadow */
+            transition: box-shadow 0.3s ease;
         }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='black' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+        .pink-shadow:hover {
+            box-shadow: 0 8px 16px rgba(255, 105, 180, 0.8); /* Darker pink shadow on hover */
+        }
+        #navbarSupportedContent {
+            list-style-type: none;
+        }
+        #navbarSupportedContent .nav-link.text-white {
+          color: black !important;
+          
         }
     </style>
 </head>
@@ -81,14 +125,17 @@
             </div>
             </li>
             <li class="nav-item">
+              <a class="nav-link text-white" href="{% url 'assistant' %}">Ask Assistant</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-white" href="{% url 'about' %}">About US</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white" href="{% url 'contact'  %}">Contact-US</a>
               </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <form class="d-flex" method="get" action="{% url 'search' %}">
+            <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
           <ul class="navbar-nav ml-auto">
@@ -163,7 +210,12 @@
         </div>
       </nav>  
       {% block banner-slider %}{% endblock banner-slider %}
-      {% block main-content %}{% endblock main-content %}
+      {% block main-content %}
+      <!-- Floating Assistant Icon -->
+<a href="{% url 'assistant' %}" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; background: #FFD1DC; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); text-decoration: none;">
+  <i class="fas fa-robot" style="font-size: 2rem; color: #fff;"></i>
+</a>
+{% endblock main-content %}
       {% block information %} {%  endblock %}
 
       <footer class="fixed-bottom text-center p-2 mt-5">

@@ -25,7 +25,12 @@ def contact_view(request):
     return render(request, 'contact.html')
 
 def home(request):
-    return render(request, "app/index.html")
+    clothes_products = Product.objects.exclude(category='F')
+    food_products = Product.objects.filter(category='F')
+    return render(request, "app/index.html", {
+        'clothes_products': clothes_products,
+        'food_products': food_products,
+    })
 def about(request):
     return render(request, "app/about.html")
 def contact(request):
@@ -284,4 +289,11 @@ def buy_now(request):
     product = Product.objects.get(id=product_id)
     Cart.objects.get_or_create(user=user, product=product, defaults={'quantity': 1})
     return redirect('checkout')
+
+def search(request):
+    query = request.GET.get('query', '')
+    results = []
+    if query:
+        results = Product.objects.filter(Q(title__icontains=query) | Q(category__icontains=query))
+    return render(request, 'app/search_results.html', {'query': query, 'results': results})
 
