@@ -6,3 +6,4 @@ google-generativeai
 rapidfuzz
 django-celery-results
 django-celery-beat 
+gunicorn
