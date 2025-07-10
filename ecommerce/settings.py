@@ -26,12 +26,7 @@ SECRET_KEY = 'django-insecure-gel@ty0xfi^6_h*&8hn3@=p+)u6vge(@ke4jwab8&m!%rw&qzw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'django-shopping-1-l65n.onrender.com',
-    'django-shopping-1-k46p.onrender.com',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -149,3 +144,4 @@ CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', CELERY_BROKER_UR
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
