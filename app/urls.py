@@ -15,7 +15,7 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact-view'),
     path('profile/',views.ProfileView.as_view(), name='profile'),
    
-    path('category/<slug:val>/', CategoryView.as_view(), name='category'),
+    path('category/<path:val>/', CategoryView.as_view(), name='category'),
 
     path('category/', CategoryView.as_view(), name='category_redirect'),
 

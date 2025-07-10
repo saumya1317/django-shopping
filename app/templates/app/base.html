@@ -92,123 +92,81 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <a class="navbar-brand" href="#">
-            <img src="{% static 'app/images/Screenshot_2025-01-03_142144-removebg-preview.png' %}" width="130" height="160" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
-            {% if request.user.is_authenticated %}
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-        
-            
-            <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Products
-              </a>
-
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{% url 'category' 'D' %}">Dress</a></li>
-                <li><a class="dropdown-item" href="{% url 'category' 'E' %}">Ethnic wear</a></li>
-                <li><a class="dropdown-item" href="{% url 'category' 'J' %}">Jeans</a></li>
-                <li><a class="dropdown-item" href="{% url 'category' 'P' %}">Party dress</a></li>
-                <li><a class="dropdown-item" href="{% url 'category' 'B' %}">Beauty</a></li>
-                <div class="dropdown-divider"></div>
-                
-              </div>
-            </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'assistant' %}">Ask Assistant</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{% url 'about' %}">About US</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'contact'  %}">Contact-US</a>
-              </li>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background:#2874f0;">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}" style="font-size:1.7em;letter-spacing:1px;">
+      <img src="{% static 'app/images/Screenshot_2025-01-03_142144-removebg-preview.png' %}" width="60" height="60" alt="" class="me-2">
+      <span style="color:#fff;">Flipmart</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Clothing</a></li>
+            <li><a class="dropdown-item" href="#">Electronics</a></li>
+            <li><a class="dropdown-item" href="#">Shoes</a></li>
+            <li><a class="dropdown-item" href="#">Watches</a></li>
+            <li><a class="dropdown-item" href="#">Jewellery</a></li>
+            <li><a class="dropdown-item" href="#">Health & Beauty</a></li>
+            <li><a class="dropdown-item" href="#">Kids & Babies</a></li>
+            <li><a class="dropdown-item" href="#">Sports</a></li>
+            <li><a class="dropdown-item" href="#">Home & Garden</a></li>
           </ul>
-          <form class="d-flex" method="get" action="{% url 'search' %}">
-            <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-          <ul class="navbar-nav ml-auto">
-            <!-- Right side links -->
-            <ul class="navbar navbar-expand-lg navbar-dark bg-success" style="list-style-type: none; padding-left: 0;">
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Saumya
-                  </a> <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="list-style-type: none; padding-left: 0;">
-                    <li>
-                        <a class="dropdown-item btn btn-light" href="{% url 'profile' %}" style="font-weight: bold; width: 100%; text-align: center;">Profile</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item btn btn-light" href="#" style="font-weight: bold; width: 100%; text-align: center;">Orders</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item btn btn-light" href="{% url 'passwordchange' %}" style="font-weight: bold; width: 100%; text-align: center;">Change password</a>
-                    </li>
-                    <li>
-                        {% if user.is_authenticated %}
-                        <a class="dropdown-item btn btn-light" href="{% url 'logout' %}" style="font-weight: bold; width: 100%; text-align: center;">Logout</a>
-                    {% endif %}
-                    
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'showcart' %}">Cart</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Wishlist</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'CustomerRegistration' %}">Registration</a>
-            </li>
-        </ul>
-            </li>
-            {% endif %}
-        </ul>
-        
-        <!-- Bootstrap hover effect -->
-        <style>
-            .dropdown-item {
-                margin-bottom: 5px; /* Add space between buttons */
-            }
-            .btn-light {
-                background-color: white;
-                color: black;
-                padding: 10px 20px;
-                border-radius: 5px;
-                border: 1px solid transparent;
-                width: 100%;
-                text-align: center;
-            }
-            .btn-light:hover {
-                background-color: #FF69B4 !important; /* Light pink on hover */
-                color: white !important; /* White text on hover */
-                cursor: pointer;
-            }
-        </style>
-        
-        
-           
-
-           </ul>
-        </div>
-      </nav>  
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold" href="{% url 'assistant' %}">Ask ShopGenie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold" href="{% url 'about' %}">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold" href="{% url 'contact' %}">Contact Us</a>
+        </li>
+      </ul>
+      <form class="d-flex me-3" method="get" action="{% url 'search' %}">
+        <input class="form-control me-2" type="search" name="query" placeholder="Search for products, brands and more" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+      </form>
+      <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+        <li class="nav-item me-2">
+          <a class="btn btn-warning fw-bold" href="{% url 'showcart' %}" style="color:#2874f0;background:#ffd700;border:none;">
+            <i class="fas fa-shopping-cart"></i> Cart
+          </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ request.user.username }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Orders</a></li>
+            <li><a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white fw-bold" href="{% url 'CustomerRegistration' %}">Register</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
       {% block banner-slider %}{% endblock banner-slider %}
       {% block main-content %}
       <!-- Floating Assistant Icon -->

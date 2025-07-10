@@ -1,16 +1,15 @@
 from django.contrib import admin
-from .models import Product, Customer,Cart, PriceAlert
+from .models import Product, Customer, Cart, PriceAlert, Category, Order, OrderItem
 
-# Register your models here.
-@admin.register(Product)
-class ProductModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'selling_price', 'discounted_price', 'category']
-@admin.register(Customer)
-class CustomerModelAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'locality', 'city', 'state','zipcode']
-@admin.register(Cart)
-class CartModelAdmin(admin.ModelAdmin):
-    list_display= ['id','user','product','quantity']
-@admin.register(PriceAlert)
-class PriceAlertAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'product', 'target_price', 'buy_when_drop', 'fulfilled']
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'parent')
+    list_filter = ('parent',)
+    search_fields = ('name',)
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Product)
+admin.site.register(Customer)
+admin.site.register(Cart)
+admin.site.register(PriceAlert)
+admin.site.register(Order)
+admin.site.register(OrderItem)

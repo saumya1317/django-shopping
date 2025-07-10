@@ -1,20 +1,172 @@
 {% extends 'app/base.html' %}
-{% block title %}Your Assistant{% endblock title %}
+{% block title %}Ask ShopGenie{% endblock title %}
 {% block main-content %}
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Ask Your Assistant</h2>
-    <form method="post" action="">
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <form id="clear-chat-form" method="post" style="text-align:right; margin-bottom:10px;">
         {% csrf_token %}
-        <div class="mb-3">
-            <input type="text" class="form-control" name="query" placeholder="Ask anything... (e.g., 'milk tea under 100', 'purple farewell look under 1000')" required>
+        <button type="submit" class="btn btn-danger btn-sm">Clear Chat</button>
+      </form>
+      <div class="chatbot-widget" style="position:relative;box-shadow:0 4px 24px rgba(80,0,120,0.10);margin:auto;">
+        <div class="chatbot-header">
+          <span class="bot-avatar">🤖</span>
+          <span class="bot-name">ShopGenie</span>
+          <span class="bot-status">Online Now</span>
         </div>
-        <button type="submit" class="btn btn-primary">Ask</button>
+        <div id="chatbot-messages" class="chatbot-messages" style="max-height:400px;overflow-y:auto;background:#f7f5fa;">
+          {% if chat_history %}
+            {% for chat in chat_history %}
+              <div class="chatbot-message user">
+                <div class="chatbot-bubble user">{{ chat.user }}</div>
+                <div class="chatbot-timestamp">{{ chat.timestamp }}</div>
+              </div>
+              <div class="chatbot-message bot">
+                <div class="current-response-box">
+                  <div class="chatbot-bubble bot mt-2">{{ chat.assistant|safe }}</div>
+                </div>
+                <div class="chatbot-timestamp">{{ chat.timestamp }}</div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+        <form id="chatbot-form" class="chatbot-form">
+          <input type="text" id="chatbot-input" placeholder="Type your message..." autocomplete="off" />
+          <button type="submit">Send</button>
     </form>
-    {% if response %}
-    <div class="mt-4 p-3 bg-light border rounded">
-        <h5>Assistant's Response:</h5>
-        <div>{{ response|safe }}</div>
+      </div>
     </div>
-    {% endif %}
+  </div>
 </div>
+<style>
+.chatbot-widget {
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+.chatbot-header {
+  background: #a259f7;
+  color: #fff;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bot-avatar {
+  font-size: 2em;
+}
+.bot-name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.bot-status {
+  margin-left: auto;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+.chatbot-messages {
+  padding: 16px;
+  background: #f7f5fa;
+}
+.chatbot-message {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.chatbot-message.bot {
+  align-items: flex-start;
+}
+.chatbot-message.user {
+  align-items: flex-end;
+}
+.chatbot-bubble {
+  padding: 10px 16px;
+  border-radius: 18px;
+  max-width: 80%;
+  font-size: 1em;
+  margin-bottom: 4px;
+}
+.chatbot-bubble.bot {
+  background: #e5d8fa;
+  color: #4b2e83;
+  border-bottom-left-radius: 4px;
+}
+.chatbot-bubble.user {
+  background: #a259f7;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.chatbot-form {
+  display: flex;
+  border-top: 1px solid #eee;
+  padding: 10px;
+  background: #fff;
+}
+#chatbot-input {
+  flex: 1;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1em;
+  outline: none;
+}
+.chatbot-form button {
+  background: #a259f7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+</style>
+<script>
+const messagesDiv = document.getElementById('chatbot-messages');
+const form = document.getElementById('chatbot-form');
+const input = document.getElementById('chatbot-input');
+function addMessage(text, sender='bot') {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'chatbot-message ' + sender;
+  const bubble = document.createElement('div');
+  bubble.className = 'chatbot-bubble ' + sender;
+  bubble.innerText = text;
+  msgDiv.appendChild(bubble);
+  messagesDiv.appendChild(msgDiv);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+// Initial greeting
+addMessage("Hi! I'm ShopGenie 🤖. How can I help you today?");
+form.onsubmit = async function(e) {
+  e.preventDefault();
+  const userText = input.value.trim();
+  if (!userText) return;
+  addMessage(userText, 'user');
+  input.value = '';
+  // Send to Django backend (assistant endpoint)
+  const response = await fetch(window.location.pathname, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': '{{ csrf_token }}'},
+    body: 'query=' + encodeURIComponent(userText)
+  });
+  const html = await response.text();
+  // Parse the latest assistant response from the returned HTML
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const currentBox = doc.querySelector('.current-response-box .mt-2');
+  if (currentBox) {
+    addMessage(currentBox.innerText, 'bot');
+  } else {
+    // fallback: try to extract from the page body
+    const bodyText = doc.body ? doc.body.innerText.trim() : '';
+    if (bodyText) {
+      addMessage(bodyText, 'bot');
+    } else {
+      addMessage('Sorry, I could not understand that.', 'bot');
+    }
+  }
+};
+</script>
 {% endblock main-content %} 

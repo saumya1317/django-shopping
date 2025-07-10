@@ -5,12 +5,13 @@
 
 {% block main-content %}
 <div class="container my-5">
+    <button onclick="window.history.back()" class="btn btn-secondary mb-3">&larr; Back</button>
     <div class="row">
         <div class="col-sm-3">
             <!-- Style links as buttons for better visibility -->
             {% for val in title %}
-                <a href="{% url 'category-title' val.title %}" class="btn btn-outline-primary btn-block mb-3" role="button" aria-current="true">
-                    {{ val.title }}
+                <a href="{% url 'category' val.name %}" class="btn btn-outline-primary btn-block mb-3" role="button" aria-current="true">
+                    {{ val.name }}
                 </a>
             {% endfor %}
         </div>
@@ -21,22 +22,18 @@
                 {% for product in product %}
                     <div class="col-sm-4 mb-4">
                         <!-- Make the entire product card clickable -->
-                        <a href="{% url 'product-detail' pk=product.id %}" class="btn">
+                        <a href="{% url 'product-detail' pk=product.id %}" class="btn p-0" style="width:100%;">
                             <div class="product-card">
                                 <!-- Display Product Image -->
                                 <img src="{{ product.product_image.url }}" alt="{{ product.title }}" class="product-image">
-                                
                                 <!-- Display Product Title -->
                                 <h5 class="product-title">{{ product.title }}</h5>
-                                
                                 <!-- Display Product Selling Price -->
                                 <p class="product-price">₹{{ product.selling_price }}/-</p>
-                                
                                 <!-- Display Discounted Price (if available) -->
                                 {% if product.discounted_price %}
                                     <p class="product-discounted-price">₹{{ product.discounted_price }}</p>
                                 {% endif %}
-                                
                                 <!-- Product Description -->
                                 <p class="product-description">{{ product.description|truncatewords:10 }}</p>
                             </div>
@@ -57,26 +54,29 @@
         text-align: center;
         border: 1px solid #ddd;
         transition: transform 0.3s ease;
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
-
     .product-card:hover {
         transform: scale(1.05);
     }
-
     .product-image {
         width: 100%;
-        height: auto;
+        height: 180px;
+        object-fit: cover;
         border-radius: 5px;
         margin-bottom: 10px;
     }
-
     .product-title {
         font-size: 16px;
         font-weight: bold;
         color: #2c3e50;
         margin-bottom: 10px;
+        min-height: 40px;
     }
-
     .product-price {
         font-size: 14px;
         color: #e74c3c;
@@ -84,26 +84,21 @@
         text-decoration: line-through;
         margin-bottom: 5px;
     }
-
     .product-discounted-price {
         font-size: 12px;
         color: #2ecc71;
         font-weight: bold;
         margin-bottom: 5px;
     }
-
     .product-description {
         font-size: 12px;
         color: #7f8c8d;
         margin-top: 10px;
+        min-height: 30px;
     }
-
-    /* Styling for buttons in the list */
     .btn-block {
         width: 100%;
     }
-
-    /* Optional: Add space between buttons */
     .list-group-item-action {
         margin-bottom: 10px;
     }
