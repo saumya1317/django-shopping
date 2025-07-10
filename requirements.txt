@@ -1,0 +1,8 @@
+Django>=5.2
+Pillow
+celery
+python-dotenv
+google-generativeai
+rapidfuzz
+django-celery-results
+django-celery-beat 
