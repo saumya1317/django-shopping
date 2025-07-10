@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'django-shopping-1-l65n.onrender.com',
+    'django-shopping-1-k46p.onrender.com',
 ]
 
 
