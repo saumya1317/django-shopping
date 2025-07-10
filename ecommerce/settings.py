@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-gel@ty0xfi^6_h*&8hn3@=p+)u6vge(@ke4jwab8&m!%rw&qzw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'django-shopping-1-l65n.onrender.com',
+]
 
 
 # Application definition
@@ -132,8 +136,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your_16_char_app_password'  # Use your Gmail app password
+EMAIL_HOST_USER = 'saumya131725@gmail.com'
+EMAIL_HOST_PASSWORD = 'xwpc avbq qrhg fpbu'  # Use your Gmail app password
 DEFAULT_FROM_EMAIL = "no-reply@chickstyle.local"
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
