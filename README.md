@@ -1,6 +1,6 @@
 # Django Shopping Assistant
 
-A modern e-commerce platform with AI-powered product recommendations, price alerts, and a chatbot assistant (ShopGenie) built with Django.
+A    Modern e-commerce platform with AI-powered product recommendations, price alerts, and a chatbot assistant (ShopGenie) built with Django.
 
 ## Features
 - Hierarchical categories and subcategories for products
